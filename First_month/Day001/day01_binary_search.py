@@ -54,3 +54,4 @@ class Solution:
 #             right_index = mid_index
 #             ##right直接等于middle，因为右开代表right不在列表内，与排除middle效果一致
 #     return -1
+
