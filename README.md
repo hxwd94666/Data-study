@@ -1,4 +1,4 @@
-# 🎯 180-Day Data Engineering Journey | 大数据开发180天突击计划
+# 🎯 大数据开发180天学习计划
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![SQL](https://img.shields.io/badge/SQL-Advanced-orange.svg)]()
