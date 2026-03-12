@@ -9,7 +9,7 @@
 ## 👤 About Me
 
 你好，我是重庆邮电大学（CQUPT）**数据计算及应用专业**的大四学生。
-此前，我曾在 **重庆德勤 GDC** 担任大数据开发实习生，参与过企业级离线数据仓库的数据流转校验与 Apache Airflow 调度任务的运营监控。
+此前，我曾在 **德勤** 担任大数据开发实习生，参与宝⻢数仓新⽼集群迁移，负责数据任务适配、质量保障及上线表格开发，⽀撑平台平稳切换。。
 
 这个仓库记录了我备战 2026 年秋招的核心轨迹。面对即将到来的职场，我发起了这项为期 180 天的硬核技术突击计划，致力于从底层逻辑到上层架构，全面夯实我的数据开发（Data Engineering）能力，并向着构建高可用企业级数据管道的目标迈进。
 
@@ -17,7 +17,7 @@
 
 * **开发语言**: Python (Type Hinting & OOP), 进阶 SQL (Window Functions, Complex Joins)
 * **大数据生态体系**: Hadoop, Hive, Apache Spark (PySpark)
-* **任务流调度**: Apache Airflow
+* **工作流与任务调度**: Linux，Apache Airflow
 * **工程化规范**: Git, 盲打指法重塑, Google Docstring 规范
 
 ## 📂 Repository Structure (仓库导航)
@@ -41,7 +41,7 @@
   * 重构实习经历，深入编写 Airflow DAG 调度脚本。
 * **Phase 3: 计算引擎与全链路实战 (Week 13-18)**
   * 掌握现代大数据主流引擎 Spark 的核心原理（RDD/DAG/宽窄依赖）。
-  * **核心产出**：独立落地一个基于 `PySpark + Airflow + Hive` 的完整电商/物流离线数据仓库项目。
+  * **核心产出**：独立落地一个基于 `PySpark + Hive` 的完整电商/物流离线数据仓库项目。
 * **Phase 4: 性能调优与开源贡献 (Week 19-24)**
   * 组件底层原理剖析与 JVM/Python 底层机制探索。
   * 尝试参与 Apache Airflow 等开源社区的微小贡献 (PR)。
