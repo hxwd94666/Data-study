@@ -6,15 +6,16 @@
 [![Apache Hive](https://img.shields.io/badge/Apache_Hive-Data_Warehouse-FDEE21.svg?logo=apachehive&logoColor=black)]()
 [![Airflow](https://img.shields.io/badge/Airflow-Task_Scheduling-017CEE.svg?logo=apacheairflow&logoColor=white)]()
 
-> **"Data is the new oil, but pipelines are the refineries."** > 致力于构建高可用、低延迟、强一致性的企业级数据流水线。
+> **"Data is the new oil, but pipelines are the refineries."** 
+> **致力于构建高可用、低延迟、强一致性的企业级数据流水线。**
 
 ## 👨‍💻 About Me
 
-你好，我是来自重庆邮电大学（CQUPT）**数据计算及应用**专业的大四学生。
+你好，我是来自重庆邮电大学（CQUPT）**数据计算及应用**专业的2026届学生。
 
 在先前的职业实践中，我曾于 **德勤 (Deloitte)** 担任大数据开发实习生，参与了企业级数仓新老集群迁移、Airflow 任务调度优化以及大规模数据质量（DQ）自动化巡检体系的建设。
 
-本仓库是我发起的 **“180天数据开发硬核拉练计划”**。旨在将我过去的工程实践经验进行底层理论化，系统性重构从离线数仓建模、分布式计算引擎（Spark）调优到全链路工作流调度的核心技术栈，以迎接未来的严峻技术挑战。
+本仓库是我发起的 **“180天数据开发拉练计划”**。旨在将我过去的工程实践经验进行底层理论化，系统性重构从离线数仓建模、分布式计算引擎（Spark）调优到全链路工作流调度的核心技术栈，以迎接未来的技术挑战。
 
 ## 🛠️ Tech Stack & Core Competencies
 
@@ -27,9 +28,9 @@
 
 ## 📂 Repository Structure (仓库导航)
 
-* 👉 **[`/01_Daily_Execution_Logs`](./01_Daily_Execution_Logs)**: 每日技术迭代日志。记录技术难点攻坚过程、踩坑复盘与源码级解析。
-* 👉 **[`/02_Code_Achievements`](./02_Code_Achievements)**: 核心代码沉淀区。包含企业级规范编写的 Python 算法题解、复杂业务 SQL 实现及数据自动化脚本。
-* 👉 **[`/03_Data_Pipeline_Projects`](./03_Data_Pipeline_Projects)**: 个人全链路离线数仓项目实战源码（建设中）。
+* 👉 **[`/DayPlan`](./DayPlan)**: 每日技术学习日程。记录技术点攻坚方向与过程。
+* 👉 **[`/First_month`](./First_month)**: 核心代码沉淀区。包含企业级规范编写的 Python 算法题解、复杂业务 SQL 实现及数据自动化脚本。
+* 👉 **[`/Data_Projects`](./Data_Projects)**: 个人全链路离线数仓项目实战源码（建设中）。
 
 ---
 
@@ -74,5 +75,5 @@
 - [ ] **Week 20:** 大数据组件深层防御：Spark 内存动态分配机制；Hive 谓词下推与向量化查询调优。
 - [ ] **Week 21:** 业务场景答辩演练：基于 STAR 法则，对大规模数仓迁移与质量保障业务进行深度沙盘推演。
 - [ ] **Week 22:** 算法肌肉记忆复盘：LeetCode 核心数据结构高频题极致优化，确保 Bug-Free 手撕能力。
-- [ ] **Week 23:** 高效信息检索与匹配：聚焦头部外企科技岗、金融科技中心与新能源数据平台，开启全面技术检验。
-- [ ] **Week 24:** 沉淀与进化：整理高压面试复盘文档，查漏补缺，拥抱开源，向下一个里程碑进发！
+- [ ] **Week 23:** 高效信息检索与匹配：聚焦头部大厂技术岗、金融中心与新能源数据平台，开启全面技术检验。
+- [ ] **Week 24:** 沉淀与进化：整理面试复盘文档，查漏补缺，拥抱开源，向下一个里程碑进发！
