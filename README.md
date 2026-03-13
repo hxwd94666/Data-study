@@ -29,7 +29,7 @@
 ## 📂 Repository Structure (仓库导航)
 
 * 👉 **[`/DayPlan`](./DayPlan)**: 每日技术学习日程。记录技术点攻坚方向与过程。
-* 👉 **[`/First_month`](./First_month)**: 核心代码沉淀区。包含企业级规范编写的 Python 算法题解、复杂业务 SQL 实现及数据自动化脚本。
+* 👉 **[`/First_month`](./First_month)**: 核心代码沉淀区（按月整理）。包含 Python 算法题解、业务 SQL 实现及数据自动化脚本。
 * 👉 **[`/Data_Projects`](./Data_Projects)**: 个人全链路离线数仓项目实战源码（建设中）。
 
 ---
@@ -43,7 +43,7 @@
 
 - [x] **Week 1:** Python 内存机制与双指针算法实战，确立 PEP 8 与 Type Hint 规范。
 - [ ] **Week 2:** 哈希映射底层逻辑与复杂多表级联（JOIN）业务场景优化。
-- [ ] **Week 3:** 🔥 **核武级 SQL 攻坚**：彻底掌握窗口函数 (Window Functions) 体系（连续登录、留存率、各类 TopN 业务）。
+- [ ] **Week 3:** 🔥 **核武级 SQL 攻坚**：彻底掌握窗口函数体系（连续登录、留存率、各类 TopN 业务）。
 - [ ] **Week 4:** Python 面向对象编程 (OOP) 与企业级异常拦截 (Try-Except/Logging) 机制开发。
 - [ ] **Week 5:** Linux 服务器文本处理大师：熟练运用 Shell 三剑客 (`grep`, `awk`, `sed`) 进行海量日志提纯。
 - [ ] **Week 6:** Hadoop 生态宏观架构剖析：HDFS 读写全流程原理与 YARN 资源调度策略。
@@ -55,7 +55,7 @@
 - [ ] **Week 8:** 海量数据治理：Hive 动态分区 (Partition) 与分桶 (Bucket) 的实战应用。
 - [ ] **Week 9:** 🔥 **数仓灵魂建设**：深挖 Kimball 维度建模，彻底吃透 ODS -> DWD -> DWS -> ADS 数据流转闭环。
 - [ ] **Week 10:** 调度中枢重构：Apache Airflow DAG 进阶开发，精准控制复杂 Task 的时序与血缘依赖。
-- [ ] **Week 11:** 解决大厂痛点：深入剖析数据倾斜 (Data Skew) 成因，掌握加盐、MapJoin、两阶段聚合等 7 种破解方案。
+- [ ] **Week 11:** 解决大厂痛点：深入剖析数据倾斜成因，掌握加盐、MapJoin、两阶段聚合等 7 种破解方案。
 - [ ] **Week 12:** 数据质量 (Data Quality) 闭环：基于 Python 开发自动化数据一致性比对与抽样巡检脚本。
 
 ### ⚔️ Phase 3: Distributed Computing & Spark Tuning (Week 13-18)
@@ -65,7 +65,7 @@
 - [ ] **Week 14:** PySpark 数据管道开发：熟练使用 DataFrame API 与 Spark SQL 混合编程。
 - [ ] **Week 15:** 🔥 **集群性能调优**：深入 Spark Web UI，定位 GC 停顿、数据倾斜及 Executor 资源分配瓶颈。
 - [ ] **Week 16:** 💻 **【全链路实战】(上游)**：PySpark 数仓环境搭建、亿级模拟业务数据接入与 ODS 层落盘。
-- [ ] **Week 17:** 💻 **【全链路实战】(中台)**：基于 PySpark 实施 DWD/DWS 层复杂聚合，接入 Airflow 实现无人值守调度。
+- [ ] **Week 17:** 💻 **【全链路实战】(中台)**：基于 PySpark 实施 DWD/DWS 层复杂聚合，接入 Airflow 实现调度。
 - [ ] **Week 18:** AI 赋能前瞻：探索 LLM 在数据开发领域的提效应用 (Prompt 辅助 SQL 生成与异常检测)。
 
 ### 🏆 Phase 4: Advanced Tuning & Open Source (Week 19-24)
