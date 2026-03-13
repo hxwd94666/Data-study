@@ -27,7 +27,7 @@
 
 ## 📂 Repository Structure (仓库导航)
 
-* 👉 **[`/DayPlan`](./DayPlan)**: 每日技术学习日程。记录技术点攻坚方向与过程。
+* 👉 **[`/Day_Plan`](Day_Plan)**: 每日技术学习日程。记录技术点攻坚方向与过程。
 * 👉 **[`/First_month`](./First_month)**: 核心代码沉淀区（按月整理）。包含 Python 算法题解、业务 SQL 实现及数据自动化脚本。
 * 👉 **[`/Data_Projects`](./Data_Projects)**: 个人全链路离线数仓项目实战源码（建设中）。
 
