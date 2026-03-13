@@ -6,7 +6,6 @@
 [![Apache Hive](https://img.shields.io/badge/Apache_Hive-Data_Warehouse-FDEE21.svg?logo=apachehive&logoColor=black)]()
 [![Airflow](https://img.shields.io/badge/Airflow-Task_Scheduling-017CEE.svg?logo=apacheairflow&logoColor=white)]()
 
-> **"Data is the new oil, but pipelines are the refineries."** 
 > **致力于构建高可用、低延迟、强一致性的企业级数据流水线。**
 
 ## 👨‍💻 About Me
