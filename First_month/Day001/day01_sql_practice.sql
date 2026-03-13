@@ -1,4 +1,4 @@
---牛客-在线编程-sql必知必会练手
+--牛客-在线编程-sql必知必会练手60-66
 select cust_id from Customers;
 
 select distinct(prod_id) from OrderItems;
@@ -16,3 +16,7 @@ order by cust_id asc,order_date desc;
 select quantity,item_price
 from OrderItems
 order by quantity desc,item_price desc;
+
+SELECT vend_name
+FROM Vendors
+ORDER by vend_name DESC;
