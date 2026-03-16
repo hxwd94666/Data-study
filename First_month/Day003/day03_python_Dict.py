@@ -39,3 +39,10 @@ cart=[{"name":"mate80","price":6999,"num":1},{...}]
 #这种方法也不行，因为键值对查询是靠key的，而这里的key name 是唯一的，所以查询不到
 cart={"mate80":{"price":6999,"num":1},"mate10":{"price":5999,"num":1}}
 #正确的方法
+
+"""字典推导式"""
+# {key_expression: value_expression for item in iterable if condition}
+# key_expression：生成键的表达式。
+# value_expression：生成值的表达式。
+# for item in iterable：从可迭代对象中遍历元素。
+# if condition（可选）：过滤条件，只有满足条件的元素才会被处理。
