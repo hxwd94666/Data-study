@@ -44,3 +44,23 @@ def order_calculator(*args,coupon_price,integral):
         total_price += 10
 #返回订单总价
     return total_price
+
+"""map,filter,reduce"""
+#map会将函数作用于序列的每一个元素，并返回一个迭代器。
+#filter会将函数作用于序列的每一个元素，并返回一个迭代器，返回的迭代器中只包含函数返回值为True的元素。
+#reduce会将函数作用于序列的每一个元素，并返回一个值。
+#map
+def square(x):
+    return x*x
+a = [1,2,3,4,5]
+b = [2,3,4,5,6]
+print(list(map(square,a)))
+#filter
+def is_even(x):
+    return x % 2 == 0
+print(list(filter(is_even,a)))
+#reduce
+from functools import reduce
+def add(x,y):
+    return x+y
+print(reduce(add,a))
