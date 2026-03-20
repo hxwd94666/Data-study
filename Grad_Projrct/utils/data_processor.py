@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings('ignore')
 #待优化
 #tf提取字段数量增加
-#商品特征归类处理
+#商品特征归类
 
 class DataProcessor:
     """
