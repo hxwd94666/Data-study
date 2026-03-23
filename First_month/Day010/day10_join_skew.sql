@@ -27,5 +27,5 @@ ON
     -- 如果 A.user_id 非空，按正常逻辑关联
     -- 如果 A.user_id 为空，将其替换为 'null_skew_0.2341...' 格式的随机字符串强制打散
     COALESCE(A.user_id, CONCAT('null_skew_', CAST(RAND() AS STRING))) = B.user_id
-
+-- CONCAT() 函数用于拼接字符串，CONCAT() 函数的参数可以是任意多个字符串。
 -- 补充规范：在企业级数仓中，对于不可控的外表，始终保持对关联键的敬畏。
