@@ -1,11 +1,11 @@
 import csv
 import random
-import  uuid
+import uuid
 from datetime import  datetime,timedelta
 
-total_rows=1000000
+total_rows=1000000 #生成数据行数
 file_name='ods_user_action_log_mock.csv'
-null_rate=0.15
+null_rate=0.15 #NULL值比例
 
 # 预设一些随机池，提高生成速度
 ACTION_TYPES = ['click', 'view', 'add_cart', 'purchase', 'search']
@@ -20,32 +20,34 @@ with open(file_name, 'w', encoding='utf-8', newline='') as f:
 
     for i in range(total_rows):
         # 1.使用uuid 生成唯一 log_id
-        log_id = str(uuid.uuid4())
+        log_id = str(uuid.uuid4()) #生成一个 UUID 版本 4（基于随机数）的对象，其值有 128 位
 
         # 2. 生成 user_id，并执行 15% 的概率投毒
         # random.random() 会生成 0~1 之间的小数。如果小于 0.15，我们就强行赋值为 '\N'
         # (注：在 Hive 的底层文本格式中，'\N' 是标准的 NULL 值占位符)
         if random.random() < null_rate:
-            user_id = '\\N'
+            user_id = '\\N' #需要两个\，否则会被判定为转义符
         else:
             user_id = f"USER_{random.randint(1, 10000):05d}"
+            #f"..."格式化字符串，randint(1, 10000)为1到10000的随机数，:05d为格式化，不足5位前面补0
 
         # 3. 随机抽取行为和页面
         action_type = random.choice(ACTION_TYPES)
         page_url = f"https://www.company.com{random.choice(PAGES)}"
+        #random.choice(x) 从列表中随机抽取一个元素
 
         # 4. 生成最近 3 天内的随机时间
         random_seconds = random.randint(0, 3 * 24 * 3600)
         action_time = (datetime.now() - timedelta(seconds=random_seconds)).strftime('%Y-%m-%d %H:%M:%S')
+        # datetime.now()为当前时间，timedelta()为时间间隔，strftime()为格式化时间
 
         # 5. 随机伪造一个内网或外网 IP
         client_ip = f"192.168.{random.randint(1, 255)}.{random.randint(1, 255)}"
 
         # 6. 将这一行数据打包成列表，直接刷入硬盘！
         row_data = [log_id, user_id, action_type, page_url, action_time, client_ip]
-        writer.writerow(row_data)
+        writer.writerow(row_data) #将数据写入文件
 
-        # 性能监控：每生成 10 万条打印一次进度，防止你以为程序死机了
         if (i + 1) % 100000 == 0:
             print(f"✅ 已成功写入 {i + 1} 条数据...")
 
