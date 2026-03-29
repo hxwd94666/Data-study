@@ -2,21 +2,23 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
+import random  # 移到顶部统一导入
 
 # 导入项目中自己编写的工业级模块
 from utils.data_processor import DataProcessor
 from utils.data_loader import AdvancedInteractionSampler, get_advanced_loader
 from models.ncf_advanced import AdvancedNCFModel
+from models.bpr_mf import MatrixFactorization
+from models.deepfm import DeepFM
 from utils.metrics import Evaluator
 
 
 def main():
     # ================= 1. 工程全局配置 =================
-    # 使用你本地的真实 CSV 路径
     interaction_path = 'data/Appliances_sampled.csv'
     meta_path = 'data/meta_Appliances.csv'
 
-    epochs = 10
+    epochs = 50
     batch_size = 4096
     lr = 0.001
     k = 5  # 计算 Top-5 推荐
@@ -37,88 +39,103 @@ def main():
     u_in, i_in, t_in, labels = sampler.generate_training_data()
     train_loader = get_advanced_loader(u_in, i_in, t_in, labels, batch_size=batch_size)
 
-    # ================= 4. 初始化文本增强型双塔模型 =================
-    print("\n🧠 初始化 Advanced-NCF 增强型神经网络...")
-    model = AdvancedNCFModel(num_users=num_users, num_items=num_items, text_dim=50)
-    model.to(device)
-
-    criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
-
-    # ================= 5. 模型训练循环 =================
-    print("\n🔥 开始模型训练与参数寻优...")
-    for epoch in range(epochs):
-        model.train()
-        total_loss = 0.0
-        for u, i, t, y in train_loader:
-            u, i, t, y = u.to(device), i.to(device), t.to(device), y.to(device)
-            optimizer.zero_grad()
-            preds = model(u, i, t)
-            loss = criterion(preds, y)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
-        print(f"▶ Epoch [{epoch + 1}/{epochs}] | BCE Loss: {total_loss / len(train_loader):.4f}")
-
-    # 保存模型，方便后续前端读取
-    torch.save(model.state_dict(), 'advanced_ncf.pth')
-    print("💾 模型训练完毕，权重已持久化保存至 advanced_ncf.pth")
-
-    # ================= 6. 工业级极速离线评估 (100样本打分制) =================
-    print(f"\n🎯 启动极速离线评估 (1正样本 + 99负样本打分制, Top-{k})...")
-    model.eval()
+    # 准备阅卷老师（在循环外初始化一次即可）
     evaluator = Evaluator(sampler.train_df, k=k)
-
     test_user_groups = sampler.test_df.groupby('user_id_encoded')['item_id_encoded'].apply(list).reset_index()
-    user_metrics_dict = {}
 
-    import random  # 确保顶部导入了 random
+    # ================= 4. 构建自动化模型流水线 =================
+    # 将要打擂台的模型装进字典，排队执行
+    model_pipeline = {
+        "Baseline_MF": MatrixFactorization(num_users=num_users, num_items=num_items, embed_dim=32),
+        "Baseline_DeepFM": DeepFM(num_users=num_users, num_items=num_items, text_dim=50, embed_dim=32),
+        "Ours_Advanced_NCF": AdvancedNCFModel(num_users=num_users, num_items=num_items, text_dim=50)
+    }
 
-    for _, row in test_user_groups.iterrows():
-        user = row['user_id_encoded']
-        true_items = row['item_id_encoded']
+    # 建立终极计分板
+    scoreboard = {}
 
-        # 只取测试集里最新的一次交互作为“目标正样本”
-        target_item = true_items[-1]
+    # ================= 5. 开启排队串行训练与评估 =================
+    for model_name, model in model_pipeline.items():
+        print("\n" + "━" * 60)
+        print(f"🚀 开始流水线任务: 【{model_name}】")
+        print("━" * 60)
 
-        # 找出用户在训练集里买过的东西
-        interacted = {item for (u, item) in sampler.train_user_item_set if u == user}
-        interacted.add(target_item)  # 把目标样本也加进去，防止负采样抽到
+        # 挂载当前模型到显卡/CPU
+        model = model.to(device)
+        criterion = nn.BCELoss()
+        optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
 
-        # 随机抽取 99 个负样本
-        negative_items = set()
-        while len(negative_items) < 99:
-            j = random.randint(0, num_items - 1)
-            if j not in interacted:
-                negative_items.add(j)
+        # ---------------- A. 训练阶段 ----------------
+        print(f"🔥 [{model_name}] 开始模型训练与参数寻优...")
+        for epoch in range(epochs):
+            model.train()
+            total_loss = 0.0
+            for u, i, t, y in train_loader:
+                u, i, t, y = u.to(device), i.to(device), t.to(device), y.to(device)
+                optimizer.zero_grad()
+                preds = model(u, i, t)
+                loss = criterion(preds, y)
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
+            print(f"▶ Epoch [{epoch + 1}/{epochs}] | BCE Loss: {total_loss / len(train_loader):.4f}")
 
-        # 候选集 = 1个真实样本 + 99个负样本
-        candidates = [target_item] + list(negative_items)
+        # 动态保存权重，避免相互覆盖
+        save_path = f"{model_name.lower()}_weights.pth"
+        torch.save(model.state_dict(), save_path)
+        print(f"💾 权重已持久化保存至 {save_path}")
 
-        # 推断
-        u_tensor = torch.full((len(candidates),), user, dtype=torch.long).to(device)
-        i_tensor = torch.tensor(candidates, dtype=torch.long).to(device)
-        t_tensor = torch.tensor(np.array([sampler.item2vec.get(item, np.zeros(50)) for item in candidates]),
-                                dtype=torch.float32).to(device)
+        # ---------------- B. 评估阶段 ----------------
+        print(f"\n🎯 [{model_name}] 启动极速离线评估 (1+99打分制)...")
+        model.eval()
 
-        with torch.no_grad():
-            predictions = model(u_tensor, i_tensor, t_tensor).view(-1)
+        # ⚠️ 极度关键：每个模型必须用干净的字典记录自己的成绩
+        user_metrics_dict = {}
 
-        # 提取 Top-K
-        _, top_indices = torch.topk(predictions, k=min(k, len(predictions)))
-        recommended_items = [candidates[idx] for idx in top_indices.cpu().numpy()]
+        for _, row in test_user_groups.iterrows():
+            user = row['user_id_encoded']
+            true_items = row['item_id_encoded']
+            target_item = true_items[-1]
 
-        # 计算指标 (真实集就这1个 target_item)
-        user_metrics_dict[user] = evaluator.calculate_metrics([target_item], recommended_items)
+            interacted = {item for (u, item) in sampler.train_user_item_set if u == user}
+            interacted.add(target_item)
 
-    overall, active, cold = evaluator.evaluate_groups(user_metrics_dict)
+            negative_items = set()
+            while len(negative_items) < 99:
+                j = random.randint(0, num_items - 1)
+                if j not in interacted:
+                    negative_items.add(j)
 
-    print("\n" + "=" * 50)
-    print(" 📊 实验结果分析评估报告 (极速版)")
-    print("=" * 50)
-    print(
-        f"【整体表现】 Precision@{k}: {overall[0]:.4f} | Recall@{k}: {overall[1]:.4f} | F1: {overall[2]:.4f} | NDCG: {overall[3]:.4f}")
-    print("=" * 50)
+            candidates = [target_item] + list(negative_items)
+
+            u_tensor = torch.full((len(candidates),), user, dtype=torch.long).to(device)
+            i_tensor = torch.tensor(candidates, dtype=torch.long).to(device)
+            t_tensor = torch.tensor(np.array([sampler.item2vec.get(item, np.zeros(50)) for item in candidates]),
+                                    dtype=torch.float32).to(device)
+
+            with torch.no_grad():
+                # 兼容不同模型的输出并展平
+                predictions = model(u_tensor, i_tensor, t_tensor).view(-1)
+
+            _, top_indices = torch.topk(predictions, k=min(k, len(predictions)))
+            recommended_items = [candidates[idx] for idx in top_indices.cpu().numpy()]
+
+            user_metrics_dict[user] = evaluator.calculate_metrics([target_item], recommended_items)
+
+        # 结算当前模型的成绩
+        overall, active, cold = evaluator.evaluate_groups(user_metrics_dict)
+        scoreboard[model_name] = overall
+        print(f"✅ [{model_name}] 评估完成！NDCG@{k}: {overall[3]:.4f}")
+
+    # ================= 6. 输出全模型打擂台成绩单 =================
+    print("\n\n" + "★" * 60)
+    print(" 🏆 毕业设计核心实验：全模型对比成绩汇总报告")
+    print("★" * 60)
+    print(f"{'模型名称':<22} | {'Precision':<10} | {'Recall':<10} | {'F1-Score':<10} | {'NDCG':<10}")
+    print("-" * 60)
+    for name, metrics in scoreboard.items():
+        print(f"{name:<25} | {metrics[0]:.4f}      | {metrics[1]:.4f}    | {metrics[2]:.4f}    | {metrics[3]:.4f}")
+    print("★" * 60)
 
 
 if __name__ == "__main__":
