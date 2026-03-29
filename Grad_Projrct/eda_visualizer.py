@@ -26,10 +26,13 @@ class EDAGenerator:
     def plot_price_distribution(self):
         print("📊 生成价格分布直方图...")
         plt.figure(figsize=(10, 6))
-        sns.histplot(self.df_meta['price'], bins=20, kde=True, color='#2ecc71')
-        plt.title('商品价格分布特征与核密度估计', fontsize=15)
+        sns.histplot(data=self.df_meta, x='price',kde=True,color='aquamarine',binwidth=10, kde_kws={'bw_adjust': 0.2})
         plt.xlabel('价格 (USD)', fontsize=12)
         plt.ylabel('商品频数', fontsize=12)
+        # 计算价格的 95% 分位数
+        p95 = self.df_meta['price'].quantile(0.95)
+        # 将 X 轴的最大值限制在这个分位数附近 (比如稍微留点余量乘个 1.1)
+        plt.xlim(0, p95 * 1.1)
         plt.savefig(os.path.join(self.plot_dir, 'price_distribution.png'), dpi=300, bbox_inches='tight')
         plt.close()
 
