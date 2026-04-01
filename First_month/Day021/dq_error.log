@@ -1,0 +1,6 @@
+2026-04-01 16:09:28,896 - [File] ERROR - 致命级预警：目标表数据量为 0，触发除零异常！
+Traceback (most recent call last):
+  File "E:\hxwd\Desktop\数开\First_month\Day021\day21_dq_logger_pro.py", line 55, in compare_row_counts
+    ratio = source_cnt / target_cnt
+            ~~~~~~~~~~~^~~~~~~~~~~~
+ZeroDivisionError: division by zero
