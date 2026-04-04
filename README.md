@@ -42,9 +42,9 @@
 *聚焦于 Python 底层特性剖析、高难度 SQL 场景攻坚与企业级代码规范落地。*
 
 - [x] **Week 1:** Python 内存机制与双指针算法实战，确立 PEP 8 与 Type Hint 规范。
-- [ ] **Week 2:** 哈希映射底层逻辑与复杂多表级联（JOIN）业务场景优化。
-- [ ] **Week 3:** 🔥 **核武级 SQL 攻坚**：彻底掌握窗口函数体系（连续登录、留存率、各类 TopN 业务）。
-- [ ] **Week 4:** Python 面向对象编程 (OOP) 与企业级异常拦截 (Try-Except/Logging) 机制开发。
+- [x] **Week 2:** 哈希映射底层逻辑与复杂多表级联（JOIN）业务场景优化。
+- [x] **Week 3:** 🔥 **核武级 SQL 攻坚**：彻底掌握窗口函数体系（连续登录、留存率、各类 TopN 业务）。
+- [x] **Week 4:** Python 面向对象编程 (OOP) 与企业级异常拦截 (Try-Except/Logging) 机制开发。
 - [ ] **Week 5:** Linux 服务器文本处理大师：熟练运用 Shell 三剑客 (`grep`, `awk`, `sed`) 进行海量日志提纯。
 - [ ] **Week 6:** Hadoop 生态宏观架构剖析：HDFS 读写全流程原理与 YARN 资源调度策略。
 
